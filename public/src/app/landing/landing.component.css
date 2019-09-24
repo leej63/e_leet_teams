@@ -15,3 +15,13 @@ img.bg {
     z-index: -1;
     opacity: .8;
   }
+
+  .about_us{
+    border: 1px gray solid;
+    border-radius: 10px;
+    background-color: rgb(255, 254, 247);
+    height: 100%;
+    width: 100%;
+    opacity: .3;
+  }
+  
