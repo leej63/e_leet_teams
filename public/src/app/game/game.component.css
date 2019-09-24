@@ -1,0 +1,30 @@
+.games{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.algorithm{
+    border: solid 2px black;
+    width: 40%;
+    height: 125px;
+    display: inline-block;
+}
+
+.text_editor{
+    border: solid 2px black;
+    width: 40%;
+    height: 600px;
+    display: inline-block;
+}
+
+.team_chat{
+    border: solid 2px black;
+    width: 30%;
+    height: 725px;
+    display: inline-block;
+}
+
+.res_msg{
+    border: solid 2px black;
+    width: 10%;
+}

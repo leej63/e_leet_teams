@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LandingComponent } from './landing/landing.component';
 import { GameComponent } from './game/game.component';
+import { CodeEditorComponent } from './code-editor/code-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
-    GameComponent
+    GameComponent,
+    CodeEditorComponent
   ],
   imports: [
     BrowserModule,

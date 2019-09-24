@@ -6,7 +6,7 @@ import { LandingComponent } from './landing/landing.component';
 
 
 const routes: Routes = [
-  { path: 'game', component: GameComponent },
+  { path: 'game_page', component: GameComponent },
   { path: '', component: LandingComponent },
 ];
 
