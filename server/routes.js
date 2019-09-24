@@ -1,8 +1,16 @@
 const controller = require('./controller.js');
+const path = require('path');
 
-module.exports = (app)=>{
-    app.post('/game', controller.create_game)
-    app.post('/game/check', controller.check_code)
+module.exports = function (app) {
+    app.post('/game', (req, res) => { 
+        controller.create_game(req, res);
+    });
+    app.post('/game/check', (req, res) => {
+        controller.check_code(req, res);
+    });
     // app.put('/game', controller.new_question)
-    app.all("*", controller.reroute)
+    app.all("*", (req,res,next) => {
+        console.log('hello!')
+        res.sendFile(path.resolve("./public/dist/public/index.html"));
+    });
 }
