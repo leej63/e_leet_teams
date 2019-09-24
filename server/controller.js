@@ -2,13 +2,14 @@ const Game = require('./game_model.js');
 const Question = require('./question_model.js');
 const  request = require('request');
 
-const path = require('path');
-
 module.exports = {
+<<<<<<< HEAD
+=======
     reroute: (req, res)=>{
         console.log("User has been reqwreouted to '/' and Angular is served.")
         res.sendFile(path.resolve("./public/dist/public/index.html"))
     },
+>>>>>>> b547152ddfa755b6f683a8ea348aef89e8cdb107
     create_game: (req, res)=>{
         var list_of_questions = [];
 
