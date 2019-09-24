@@ -7,7 +7,7 @@ const path = require('path');
 module.exports = {
     reroute: (req, res)=>{
         console.log("User has been reqwreouted to '/' and Angular is served.")
-        res.sendFile(path.resolve("./public/dist/pbuic/index.html"))
+        res.sendFile(path.resolve("./public/dist/public/index.html"))
     },
     create_game: (req, res)=>{
         var list_of_questions = [];

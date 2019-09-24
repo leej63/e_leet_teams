@@ -1,4 +1,5 @@
 const controller = require('./controller.js');
+const path = require('path');
 
 module.exports = (app)=>{
     app.post('/game', controller.create_game)
