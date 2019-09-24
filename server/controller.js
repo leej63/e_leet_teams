@@ -2,13 +2,7 @@ const Game = require('./game_model.js');
 const Question = require('./question_model.js');
 const  request = require('request');
 
-const path = require('path');
-
 module.exports = {
-    reroute: (req, res)=>{
-        console.log("User has been reqwreouted to '/' and Angular is served.")
-        res.sendFile(path.resolve("./public/dist/pbuic/index.html"))
-    },
     find_questions: (req, res)=>{
         Question.find()
             .then(data => res.json(data))
@@ -42,7 +36,7 @@ module.exports = {
                 console.log("There was an error with create a game instance")
             })
     },
-    check_code: (req, res)=>{
+    check_code: {
         console.log(req.body)
 
         //prepare JSON package for jdoodle
