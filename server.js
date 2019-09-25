@@ -12,10 +12,10 @@ const server = app.listen(4000, ()=> {
 var message = '';
 const io = require('socket.io')(server);
 io.on('connection', function (socket) {
-    socket.emit('message', message)
+    socket.emit('new-message', message)
     socket.on('message', (data) => {
         message = data;
-        console.log(message);
-        socket.broadcast.emit('message', message)
+        socket.emit('new-message', message);
+        //socket.broadcast.emit('new-message', message);
     })
 });
