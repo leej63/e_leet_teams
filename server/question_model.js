@@ -17,7 +17,7 @@ var QuestionSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    exprected_output: {
+    expected_output: {
         type: String,
         require: true
     }
