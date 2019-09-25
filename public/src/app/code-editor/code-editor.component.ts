@@ -12,7 +12,6 @@ export class CodeEditorComponent implements OnInit {
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
-    console.log('hi');
     this.gameService
       .getMessages()
       .subscribe((message: string) => {
@@ -24,8 +23,8 @@ export class CodeEditorComponent implements OnInit {
     this.gameService.sendMessage(this.message);
   }
 
-  hello(){
-    console.log('hello');
+  checkAnswer() {
+    console.log(JSON.stringify(this.message));
   }
 
 }

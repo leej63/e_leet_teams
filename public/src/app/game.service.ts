@@ -16,11 +16,10 @@ export class GameService {
   }
 
   public getMessages = () => {
-      console.log("This was called");
-      return Observable.create((observer) => {
-          this.socket.on('new-message', (message) => {
-              observer.next(message);
-          });
-      });
-    }
+    return Observable.create((observer) => {
+        this.socket.on('new-message', (message) => {
+            observer.next(message);
+        });
+    });
+  }
 }
