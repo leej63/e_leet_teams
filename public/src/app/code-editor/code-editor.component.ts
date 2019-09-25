@@ -12,14 +12,19 @@ export class CodeEditorComponent implements OnInit {
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
+    this.gameService
+      .getMessages()
+      .subscribe((message: string) => {
+        this.message = message;
+      });
   }
   
   sendMessage() {
     this.gameService.sendMessage(this.message);
   }
 
-  hello(){
-    console.log('hello');
+  checkAnswer() {
+    console.log(JSON.stringify(this.message));
   }
 
 }
