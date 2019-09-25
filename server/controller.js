@@ -40,7 +40,7 @@ module.exports = {
     check_code: (req, res)=>{
         //Replace with Post Man or req.body
         // var temporary_script = {
-        //     "script": "def sum(num1, num2): return num1 + num2"
+        //     "script": "cat = "dog" def sum(num1, num2): return num1 + num2"
         // }
 
         var program = {
@@ -56,21 +56,24 @@ module.exports = {
         var question = {
             name: "Add Two",
             full_promt: 'In Python, please add two integers. Return Sum',
-            input: '\nprint(sum(2, 2)).rstrip()',
+            input: "\nprint(sum(2, 2), end = '')",
             expected_output: 4,
         }
 
+        // generate();
+
         // temporary disabled. Enable when Question from models is ready
         var current_question = {}
-        Question.findOne({_id: req.params})
+        Question.findOne({name: req.body.question_name})
             .then((data)=>{
-                current_question = data;
+                current_question = data
+                console.log("Current question is: ", current_question)
             })
             .catch(err => res.json(err))
         program.script += current_question.input
 
         ///temporary. When Question is ready, replace 'question' with 'current_question'
-        program.script += question.input
+        // program.script += question.input
 
         request({
             url:'https://api.jdoodle.com/v1/execute',
@@ -92,7 +95,7 @@ module.exports = {
                     res.json(body)
                 }
             }
-            //example json response to Angular Application below:
+            // example json response to Angular Application below:
             // {
             //     "output": "0\n",
             //     "statusCode": 200,
@@ -102,13 +105,18 @@ module.exports = {
             // }
 
         })
-    },
-    generate_questions: (req, res)=>{
-        Question.create(
-            {name: "Two Sum"},
-            {full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice."},
-            {input: '\nprint(twoSum([2,7,11,15], 9)'},
-            {expected_output: '[0, 1]'}
-        )
     }
+}
+
+function generate(){
+    console.log("we are creating")
+
+    Question.create(
+        {name: "Two Sum",
+        full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+        input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
+        expected_output: '[0, 1]',   
+        }
+    )
+        .then(data => console.log(data));
 }
