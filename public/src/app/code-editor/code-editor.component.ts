@@ -24,7 +24,8 @@ export class CodeEditorComponent implements OnInit {
   }
 
   checkAnswer() {
-    console.log(JSON.stringify(this.message));
+    var catdoodle = JSON.stringify(this.message);
+    console.log(catdoodle);
   }
 
 }
