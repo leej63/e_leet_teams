@@ -36,7 +36,7 @@ module.exports = {
                 console.log("There was an error with create a game instance")
             })
     },
-    check_code: {
+    check_code: (req, res)=>{
         console.log(req.body)
 
         //prepare JSON package for jdoodle
