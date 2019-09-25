@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-code-editor',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./code-editor.component.css']
 })
 export class CodeEditorComponent implements OnInit {
-
-  constructor() { }
+  //For Sam's code: message will contain the code that the users are sending
+  message : String;
+  constructor(private gameService: GameService) { }
 
   ngOnInit() {
+  }
+  
+  sendMessage() {
+    this.gameService.sendMessage(this.message);
+  }
+
+  hello(){
+    console.log('hello');
   }
 
 }
