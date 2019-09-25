@@ -1,17 +1,3 @@
-<script>
-    var textareas = document.getElementsByTagName('textarea');
-    var count = textareas.length;
-    for(var i=0;i<count;i++){
-        textareas[i].onkeydown = function(e){
-            if(e.keyCode==9 || e.which==9){
-                e.preventDefault();
-                var s = this.selectionStart;
-                this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
-                this.selectionEnd = s+1; 
-            }
-        }
-    }
-</script>
-<textarea (keyup) = "sendMessage()" [(ngModel)]="message" rows="10" style = 'width: 500px; border: 1px solid gray' id="editor" placeholder="Type Your Text..."></textarea>
+<ace-editor (keyup) = "sendMessage()" [(text)]="message" #editor style = 'height: 90%; border-top-left-radius: 10px; border-top-right-radius: 10px'></ace-editor>
 <button (click)="checkAnswer()">Send</button>
 <p>{{message}}</p>
