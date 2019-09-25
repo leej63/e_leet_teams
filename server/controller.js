@@ -21,7 +21,10 @@ module.exports = {
                 list_of_questions = data;
 
                 Game.create(
-                    {questions: list_of_questions},
+                    {
+                        questions: list_of_questions,
+                        turns: 0,
+                    },
                     //req.body.users MUST be a list of objects with the property 'name'
                 )
                     .then((data)=>{
@@ -48,6 +51,11 @@ module.exports = {
             clientSecret: "83b142b854a815ddb5ee7830b8a0dff7296358b84645e8f4ab352eb4e3a18c19", //Our jdoodle client seceret
         }
 
+        var response = {
+            jdoodle: {},
+            game: {},
+        }
+
         //enable when you need to create one question
         // generate();
 
@@ -71,15 +79,39 @@ module.exports = {
                 //         if (body.output == current_question.expected_output){
                 //             body.message = "Correct!"
                 //             console.log('body:', body)
-                //             res.json(body)
+                //             response.jdoodle = body
                 //         }
                 //         else {
                 //             body.message = "Incorrect!"
                 //             console.log('body:', body)
-                //             res.json(body)
+                //             response.jdoodle = body
                 //         }
                 //     }
                 // })
+                Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
+                    .then(data => {
+                        console.log("Something updated! ", data)
+                        Game.findOne({_id: req.body.game_id})
+                            .then((data)=>{
+                                response.game = data
+                                console.log("Update on Current Game: ", response.game)
+                                if (data.turns > 3){
+                                    response.game.message = "No more submissions left!"
+                                    res.json(response)
+                                } else {
+                                    response.game.message = "Keep going!"
+                                    res.json(response)
+                                }
+                            })
+                            .catch((err)=>{
+                                console.log("For some reason couldn't find the updated game...")
+                                res.json(err)
+                            })
+                    })
+                    .catch((err)=> {
+                        console.log("Error at check_code > Question.findOne > Game.updateOne", err)
+                        res.json(err)
+                    })
             })
             .catch(err => res.json(err))
 

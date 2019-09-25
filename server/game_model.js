@@ -8,6 +8,13 @@ mongoose.connect('mongodb://localhost/e_leet_teams_db',
 
 var GameSchema = mongoose.Schema({
     questions: [],
+    turns: {
+        type: Number,
+        require: true
+    },
+    message: {
+        type: String
+    }
 }, {timestamps: true}
 );
 
