@@ -25,11 +25,12 @@ module.exports = {
             })
         Game.create(
             {questions: list_of_questions},
+            //req.body.users MUST be a list of objects with the property 'name'
             {users: req.body.users}
         )
             .then((data)=>{
                 res.json(data)
-                console.log("Game created with with these users: ", data[users])
+                console.log("Game created with these users: ", data['users'])
             })
             .catch((err)=>{
                 res.json(err)
@@ -37,26 +38,43 @@ module.exports = {
             })
     },
     check_code: (req, res)=>{
-        console.log(req.body)
+        //Replace with Post Man or req.body
+        var temporary_script = {
+            "script": "def sum(num1, num2): return num1 + num2"
+        }
 
-        //prepare JSON package for jdoodle
         var program = {
+            //Remember to replace
             script: req.body.script,
             language: "python3",
             versionIndex: 0,
             clientId: "d124c25a534e1781ceb5c8e4a7587d60", //Our jsdoodle client id
-            clientSecret: "47f844070a802d9df4968bb2e8807b89b6d3e9c06bd467baf60f69dc925bad4a", //Our jdoodle client seceret
+            clientSecret: "83b142b854a815ddb5ee7830b8a0dff7296358b84645e8f4ab352eb4e3a18c19", //Our jdoodle client seceret
         }
 
         //Temporary question. Pull question id from req.body
         var question = {
             name: "Add Two",
-            full_promt: 'In Python, please add two integers.',
+            full_promt: 'In Python, please add two integers. Return Sum',
             input: '\nprint(sum(2, 2))',
             expected_output: 4,
         }
+
+        // temporary disabled. Enable when Question from models is ready
+        // var current_question = {}
+        // Question.findOne({_id: req.params})
+        //     .then((data)=>{
+        //         current_question = data;
+        //     })
+        //     .catch(err => res.json(err))
+        // program.script += current_question.input
+
+        ///temporary. When Question is ready, replace 'question' with 'current_question'
         program.script += question.input
-        console.log("the Script: ", program.script)
+
+        var jdoodle_message = {
+            message: ''
+        }
 
         request({
             url:'https://api.jdoodle.com/v1/execute',
@@ -65,22 +83,29 @@ module.exports = {
         },
         function (error, response, body) {
             console.log('error:', error)
-            console.log('statusCode:', response && response.statusCode)
+            console.log('statusCode:', response.statusCode)
             console.log('body:', body)
+            console.log('body', body.statusCode)
 
             if (body.statusCode == 200){
                 if (parseInt(body.output) == parseInt(question.expected_output)){
-                    console.log('Your output matches the expected output!')
-                    console.log('Your output: ', body.output)
-                    console.log('Expected output: ', question.expected_output)
+                    body.message = "Correct!"
+                    res.json(body)
                 }
                 else {
-                    console.log('Your output did not match the expected output!')
-                    console.log('Your output: ', body.output)
-                    console.log('Expected output: ', question.expected_output)
+                    body.message = "Incorrect!"
+                    res.json(body)
                 }
             }
-            res.json(body);
+            //example json response to Angular Application below:
+            // {
+            //     "output": "0\n",
+            //     "statusCode": 200,
+            //     "memory": "5284",
+            //     "cpuTime": "0.03",
+            //     "message": "Incorrect!"
+            // }
+
         })
     }
 }
