@@ -21,8 +21,13 @@
     "@angular/compiler": "^8.2.7",
     "express": "^4.17.1",
     "mongoose": "^5.7.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^0.803.5",
+    "@angular/cli": "^8.3.5"
+  },
   "description": ""
 }

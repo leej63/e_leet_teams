@@ -51,3 +51,7 @@ img.bg {
     z-index: -1;
     opacity: .8;
   }
+
+  button{
+    margin-left: 30%;
+  }
