@@ -85,7 +85,6 @@ module.exports = {
             console.log('error:', error)
             console.log('statusCode:', response.statusCode)
             console.log('body:', body)
-            console.log('body', body.statusCode)
 
             if (body.statusCode == 200){
                 if (parseInt(body.output) == parseInt(question.expected_output)){
