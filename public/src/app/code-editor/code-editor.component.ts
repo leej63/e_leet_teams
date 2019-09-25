@@ -18,7 +18,7 @@ export class CodeEditorComponent implements OnInit {
       .subscribe((message: string) => {
         this.message = message;
       });
-
+  }
   
   sendMessage() {
     this.gameService.sendMessage(this.message);
