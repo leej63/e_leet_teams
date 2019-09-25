@@ -19,6 +19,7 @@
   "homepage": "https://github.com/leej63/e_leet_teams#readme",
   "dependencies": {
     "@angular/compiler": "^8.2.7",
+    "@types/socket.io-client": "^1.4.32",
     "express": "^4.17.1",
     "mongoose": "^5.7.1",
     "request": "^2.88.0",

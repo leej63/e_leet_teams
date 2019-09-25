@@ -38,14 +38,10 @@ module.exports = {
             })
     },
     check_code: (req, res)=>{
-<<<<<<< HEAD
-        console.log(req.body)
-=======
         //Replace with Post Man or req.body
         var temporary_script = {
             "script": "def sum(num1, num2): return num1 + num2"
         }
->>>>>>> 2ada4f72e2759c98e839f30ec6a755fd1845dc91
 
         var program = {
             //Remember to replace

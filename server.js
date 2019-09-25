@@ -6,6 +6,16 @@ app.use(express.static(__dirname + '/public/dist/public'));
 
 require('./server/routes.js')(app);
 
-app.listen(4000, ()=> {
+const server = app.listen(4000, ()=> {
     console.log("ExpressJS Server listening on port 4000");
 })
+var message = '';
+const io = require('socket.io')(server);
+io.on('connection', function (socket) {
+    socket.emit('message', message)
+    socket.on('message', (data) => {
+        message = data;
+        console.log(message);
+        socket.broadcast.emit('message', message)
+    })
+});

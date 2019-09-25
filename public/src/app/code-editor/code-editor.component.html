@@ -1,1 +1,3 @@
-<p>code-editor works!</p>
+<textarea ng-change="hello()" ng-model="message" [(ngModel)]="message" rows="10" style = 'width: 500px; border: 1px solid gray' id="editor" placeholder="Type Your Text..."></textarea>
+<button (click)="sendMessage()">Send</button>
+<p>{{message}}</p>
