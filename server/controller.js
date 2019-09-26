@@ -6,16 +6,28 @@ module.exports = {
     generate_questions: (req, res)=>{
         console.log("we are populating our questions")
         if (req.params.id == "eleetteamsadmin"){
-            Question.create(
-                {name: "Two Sum",
-                full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
-                starting_code: "def twoSum(nums, target):",
-                input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
-                expected_output: '[0, 1]',   
-                }
-            )
-                .then(data => console.log(data));
-        }
+            Question.find()
+                .then((data)=>{
+                    if (data.length > 0){
+                        var express_resposne = {
+                            'message': "We already have a list"
+                        }
+                        res.json(express_response)
+                    } else {
+                        Question.create(
+                            {name: "Two Sum",
+                            full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+                            starting_code: "def twoSum(nums, target):",
+                            input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
+                            expected_output: '[0, 1]',   
+                            }
+                        )
+                            .then(data => console.log(data))
+                            .catch(err=> res.json(err))
+                        }
+                })
+                .catch((err)=>res.json(err))
+            }
     },
     find_questions: (req, res)=>{
         Question.find()
