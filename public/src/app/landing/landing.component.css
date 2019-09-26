@@ -19,8 +19,11 @@ img.bg {
   .about_us{
     border: 1px gray solid;
     border-radius: 10px;
-    background-color: rgb(255, 254, 247);
-    height: 100%;
+    background-color: rgba(255, 254, 247, 0.2);
+    height: 90%;
     width: 100%;
-    opacity: .3;
+  }
+
+  h1{
+    vertical-align: middle;
   }
