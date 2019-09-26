@@ -160,7 +160,7 @@ module.exports = {
                                 console.log("Error at check_code > Question.findOne > Game.updateOne", err)
                                 res.json(err)
                             })
-                        }
+                        }   
                     }
                 })
             })
