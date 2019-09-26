@@ -18,4 +18,12 @@ io.on('connection', function (socket) {
         message = data;
         socket.broadcast.emit('new-message', message);
     })
+
+    socket.on('create-message', (data) => {
+        message = data;
+        socket.broadcast.emit('add-message', message);
+    })
+
 });
+
+

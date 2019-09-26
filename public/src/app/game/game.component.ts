@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { GameService } from '../game.service';
+
 
 @Component({
   selector: 'app-game',
@@ -12,8 +14,12 @@ export class GameComponent implements OnInit {
   question_number = 0;
   current_question: any;
 
-  constructor(private _httpService: HttpService, private _route: ActivatedRoute, private _router: Router) { }
+  message = '';
+  messages = [];
+
+  constructor(private _httpService: HttpService, private _route: ActivatedRoute, private _router: Router , private gameService: GameService) { }
   ngOnInit() {
+<<<<<<< HEAD
     this.game_instance = {
       questions: [],
       turns: 0,
@@ -27,6 +33,23 @@ export class GameComponent implements OnInit {
       console.log('current_question: ', this.current_question)
     })
 
+=======
+
+    this.gameService
+      .addMessage()
+      .subscribe((message: string) => {
+        this.messages.push(message);
+      });
+
+
   }
 
+  sendMessage() {
+    this.gameService.send_New_Message(this.message);
+    this.messages.push(this.message);
+    this.message = '';
+>>>>>>> eea741c3502e1b4ac16dbc846b171633ba7ecacf
+  }
+
+  
 }

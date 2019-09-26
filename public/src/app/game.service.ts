@@ -22,4 +22,17 @@ export class GameService {
         });
     });
   }
+
+  public send_New_Message(message) {
+    this.socket.emit('create-message', message);
+}
+
+public addMessage = () => {
+  return Observable.create((observer) => {
+      this.socket.on('add-message', (message) => {
+          observer.next(message);
+      });
+  });
+}
+
 }
