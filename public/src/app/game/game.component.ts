@@ -3,7 +3,6 @@ import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GameService } from '../game.service';
 
-
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -24,13 +23,13 @@ export class GameComponent implements OnInit {
       turns: 0,
       message: '',
     }
-    let observable = this._httpService.new_game_instance()
+    let observable = this._httpService.new_game_instance();
     observable.subscribe((data)=>{
       this.game_instance = data
       console.log('game_instance: ', this.game_instance)
       this.current_question = this.game_instance.questions[this.question_number]
       console.log('current_question: ', this.current_question)
-    });
+    })
 
     this.gameService
       .addMessage()
@@ -45,5 +44,4 @@ export class GameComponent implements OnInit {
     this.message = '';
   }
 
-  
 }
