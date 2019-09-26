@@ -15,6 +15,10 @@ export class CodeEditorComponent implements OnInit {
   @ViewChild('editor', {static: false}) editor;
   //For Sam's code: message will contain the code that the users are sending
   message : String = '';
+  rem_guesses = 3;
+  gameEnd : Boolean = false;
+  error_message : String = "";
+  game_text : String = `You have ${this.rem_guesses} attempt(s) remaining!`
   constructor(
     private gameService: GameService,
     private _httpService: HttpService,
@@ -27,6 +31,18 @@ export class CodeEditorComponent implements OnInit {
       .subscribe((message: string) => {
         this.message = message;
       });
+    this.gameService
+      .get_remaining_attempts()
+      .subscribe((attempts) => {
+        console.log(attempts);
+        this.rem_guesses = attempts['rem_attempts'];
+        this.gameEnd = attempts['game_end'];
+        this.game_text = attempts['game_text'];
+        this.error_message = attempts['error_message']
+        if (this.rem_guesses == 0) {
+          this.gameEnd = true;
+        }
+      });
   }
   
   ngAfterViewInit() {
@@ -38,27 +54,65 @@ export class CodeEditorComponent implements OnInit {
         tabSize: 4
     });
   }
+
   sendMessage() {
     this.gameService.sendMessage(this.message);
   }
 
+  newGame() {
+    this.message = "";
+    this.rem_guesses = 3;
+    this.game_text = `You have ${this.rem_guesses} attempt(s) remaining!`;
+    this.gameEnd = false;
+    this.sendMessage();
+    this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
+      'game_text' : this.game_text,
+      'game_end' : false,
+      'error_message' : ""});
+    //******************************************************************* */
+    //@Sam - add stuff here to grab a new question and grab the new text, etc
+    //******************************************************************* */
+  }
+
   checkAnswer() {
     var catdoodle = this.message;
-    console.log("inputted script below");
-    console.log(catdoodle);
-    console.log("Game instance: ", this.game_instance)
-
     var data = {
       script: catdoodle,
       question_name: this.current_question.name,
       game_id: this.game_instance['_id']
     }
-    console.log(data)
     let observable = this._httpService.check_submission(data)
     observable.subscribe((data)=>{
-      console.log("from express server!", data)
-      if (data['game']['turns'] == 4){
-        console.log("NO MORE GAME!")
+      console.log("from express server!", data);
+      this.rem_guesses = this.rem_guesses - 1;
+      //Check if user got right, if so, then send the rem_guesses, the game_text to be "yay!" and gameEnd to true
+      if(data['jdoodle']['message'] == 'Correct!') {
+        this.gameEnd = true;
+        this.game_text = "Correct!"
+        this.error_message = "";
+        this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
+          'game_text' : "Correct!",
+          'game_end' : true,
+          'error_message' : ""});
+      }
+      //Check if user is out of attempts, if so, then send the rem_guesses, the game_text to be "no :(" and gameEnd to true
+      else if (this.rem_guesses == 0) {
+        this.gameEnd = true;
+        this.game_text = "You are out of attempts :("
+        this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
+          'game_text' : "You are out of attempts :(",
+          'game_end' : true,
+          'error_message' : ""});
+      }
+      //Otherwise just change the rem_guesses, the game text to print that they got it incorrect and the remaining guesses 
+      //and leave gameEnd as false
+      else {
+        this.error_message = `Incorrect output: ${data['jdoodle']['output']}`
+        this.game_text = `You have ${this.rem_guesses} attempt(s) remaining!`
+        this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
+          'game_text' : `You have ${this.rem_guesses} attempt(s) remaining!`,
+          'game_end' : false,
+          'error_message' : `Incorrect output: ${data['jdoodle']['output']}`});
       }
     })
   }

@@ -7,12 +7,21 @@ import { Observable } from 'rxjs'
 })
 export class GameService {
   private socket;  
+  private name = "";
   constructor() {
     this.socket = io();
    }
 
    public sendMessage(message) {
     this.socket.emit('message', message);
+  }
+
+  public setName(name) {
+    this.name = name;
+  }
+
+  public getName() {
+    return this.name;
   }
 
   public getMessages = () => {
@@ -25,14 +34,26 @@ export class GameService {
 
   public send_New_Message(message) {
     this.socket.emit('create-message', message);
-}
+  }
 
-public addMessage = () => {
-  return Observable.create((observer) => {
-      this.socket.on('add-message', (message) => {
-          observer.next(message);
+  public addMessage = () => {
+    return Observable.create((observer) => {
+        this.socket.on('add-message', (message) => {
+            observer.next(message);
+        });
+    });
+  }
+
+  public changeAttempts(attempt_dict) {
+    this.socket.emit('change_guesses', attempt_dict);
+  }
+
+  public get_remaining_attempts = () => {
+    return Observable.create((observer) => {
+      this.socket.on('decrement_guesses', (attempts) => {
+          observer.next(attempts);
       });
-  });
-}
+    });
+  }
 
 }

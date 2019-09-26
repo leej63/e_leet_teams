@@ -3,22 +3,22 @@
     <div class="col-1"></div>
     <div class="col-6 p-0">
         <div class="games p-0">
-            <div class="algorithm my-2" style="height: 350px">
+            <div class="algorithm my-2" style="height: 250px">
                 <h6>Algorithm:</h6>
                 <p *ngIf="game_instance">{{ current_question['full_prompt'] }}</p>
                 <p>Copy and Paste code below to start! (YOU HAVE TO)</p>
                 <p>{{current_question.starting_code}}</p>
             </div>
             <div class="text_editor">
-                <app-code-editor [game_instance]="game_instance" [current_question]="current_question" [question_number]="question_number"></app-code-editor>
-            </div>  
+                <app-code-editor [game_instance]="game_instance" [current_question]="current_question" [question_number]="question_number"></app-code-editor> 
+            </div>
         </div>
     </div>
     <div class="col-4 p-0">
         <div class="team_chat m-2">
             <h6>Team chat:</h6>
 
-            <div style="overflow: auto; height: 85%;">
+            <div style="overflow: auto; height: 80%;">
                 <p *ngFor="let message of messages"> {{message}}</p>
                
             </div>
@@ -32,12 +32,8 @@
 </div>
 <div class="row">
     <div class="col text-center">
-        <button class="btn btn-success px-4 py-2">Submit</button>
     </div>
     <div class="col">
-        <div class="res_msg">
-                        
-        </div>
         <div class="col"></div>
         <div class="col"></div>
     </div>
