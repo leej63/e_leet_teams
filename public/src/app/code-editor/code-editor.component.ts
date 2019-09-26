@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, Input } from '@angular/cor
 import { GameService } from '../game.service';
 import { HttpService } from '../http.service';
 import { Router } from '@angular/router';
+import { delay } from 'q';
 
 @Component({
   selector: 'app-code-editor',
@@ -17,7 +18,11 @@ export class CodeEditorComponent implements OnInit {
   message : String = '';
   rem_guesses = 3;
   gameEnd : Boolean = false;
+  gameStart: Boolean = false;
   error_message : String = "";
+  seconds = 0;
+  minutes = 25;
+  counter = 10;
   game_text : String = `You have ${this.rem_guesses} attempt(s) remaining!`
   constructor(
     private gameService: GameService,
@@ -67,11 +72,15 @@ export class CodeEditorComponent implements OnInit {
     this.rem_guesses = 3;
     this.game_text = `You have ${this.rem_guesses} attempt(s) remaining!`;
     this.gameEnd = false;
+    this.seconds = 0;
+    this.minutes = 25;
+    this.counter = 1500;
     this.sendMessage();
     this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
       'game_text' : this.game_text,
       'game_end' : false,
       'error_message' : ""});
+    this.countdownTimer();
   }
 
   checkAnswer() {
@@ -115,6 +124,32 @@ export class CodeEditorComponent implements OnInit {
           'error_message' : `Incorrect output: ${data['jdoodle']['output']}`});
       }
     })
+  }
+
+  async countdownTimer() {
+    for (let i = 1500; i > 0; i--){
+      await delay(1000);
+      this.counter = this.counter -1;
+      // console.log(this.counter)
+      if(this.counter == -1){
+        this.gameEnd = true;
+        this.game_text = 'You ran out of time, try again!';
+        this.error_message = '';
+        return
+      }
+      if(this.seconds == 0){
+        this.seconds = 59;
+        this.minutes = this.minutes - 1;
+      }
+      else{
+        this.seconds = this.seconds - 1;
+      }
+    }
+  }
+
+  startGame () {
+    this.gameStart = true;
+    this.countdownTimer();
   }
 
 }

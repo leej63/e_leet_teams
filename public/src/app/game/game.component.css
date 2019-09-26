@@ -55,3 +55,8 @@ img.bg {
   button{
     margin-left: 30%;
   }
+
+  .countdown_timer{
+      font-size: 24px;
+      font-weight: bold;
+  }

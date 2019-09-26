@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GameService } from '../game.service';
-import { send } from 'q';
 
 @Component({
   selector: 'app-game',
@@ -11,7 +10,7 @@ import { send } from 'q';
 })
 export class GameComponent implements OnInit {
   game_instance: any;
-  question_number = 2;
+  question_number = 0;
   current_question: any;
   name = "";
   message = '';
