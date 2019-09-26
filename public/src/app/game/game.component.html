@@ -14,8 +14,16 @@
     <div class="col-4 p-0">
         <div class="team_chat m-2">
             <h6>Team chat:</h6>
+
+            <div style="overflow: auto; height: 85%;">
+                <p *ngFor="let message of messages"> {{message}}</p>
+               
+            </div>
+            <textarea style="width: 100%" cols="10" rows="2" [(ngModel)] ="message"></textarea>
+            <button style="height: 25px" (click)="sendMessage()">Send</button>
         </div>
     </div>
+
     <div class="col-1"></div>
 </div>
 <div class="row">
