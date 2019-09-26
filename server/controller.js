@@ -3,13 +3,22 @@ const Question = require('./question_model.js');
 const  request = require('request');
 
 module.exports = {
+    generate_questions: (req, res)=>{
+        console.log("we are populating our questions")
+        if (req.params.id == "eleetteamsadmin"){
+            Question.create(
+                {name: "Two Sum",
+                full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+                starting_code: "def twoSum(nums, target):",
+                input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
+                expected_output: '[0, 1]',   
+                }
+            )
+                .then(data => console.log(data));
+        }
+    },
     find_questions: (req, res)=>{
         Question.find()
-            .then(data => res.json(data))
-            .catch(err => res.json(err))
-    },
-    create_question: (req, res)=>{
-        Question.create(req.body)
             .then(data => res.json(data))
             .catch(err => res.json(err))
     },
@@ -161,22 +170,33 @@ module.exports = {
     }
 }
 
-function generate(){
-    console.log("we are creating")
+// Example solution for Two Sum Question
+// def twoSum(nums, target):
+//     dict = {}
+//     for i in range(len(nums)):
+//         if target-nums[i] not in dict:
+//             dict[nums[i]]=i
+//         else:
+//             return [dict[target-nums[i]],i]
 
-    Question.create(
-        {name: "Two Sum",
-        full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
-        starting_code: "def twoSum(self, nums: List[int], target: int) -> List[int]:",
-        input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
-        expected_output: '[0, 1]',   
-        }
-    )
-        .then(data => console.log(data));
-}
+// Sample JDoole Reponse for incorrect code
+// { output:
+//     '\nTraceback (most recent call last):\n  File "jdoodle.py", line 8, in <module>\n    print(twoSum([2,7,11,15], 9), end =\'\')\n  File "jdoodle.py", line 3, in twoSum\n    for i in ragne(len(nums)):\nNameError: name \'ragne\' is not defined\n',
+//    statusCode: 200,
+//    memory: '5284',
+//    cpuTime: '0.02',
+//    message: 'Incorrect!' } <-- added by our Express Server
 
-// Workable Solution for TwoSum Python3
-// {
-// 	"script": "def twoSum(nums, target):\n    dict = {}\n    for i in range(len(nums)):\n        if target-nums[i] not in dict:\n            dict[nums[i]]=i\n        else:\n            return [dict[target-nums[i]],i]",
-// 	"question_name": "Two Sum"
-// }
+// Sample JDoodle Reponse for valid code and correct output
+// { output: '[0, 1]',
+//   statusCode: 200,
+//   memory: '5272',
+//   cpuTime: '0.02',
+//   message: 'Correct!' } <-- added by our Express Server
+
+// Sample JDoodle Reponse for valid code but incorrect output
+// { output: '[0, 100000]',
+//   statusCode: 200,
+//   memory: '5276',
+//   cpuTime: '0.03',
+//   message: 'Incorrect!' } <-- added by our Express Server

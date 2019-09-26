@@ -24,3 +24,19 @@ img.bg {
     width: 100%;
   }
 
+  .styleshopbtn1{
+    color:white;
+    background-color: rgb(121, 118, 118);
+
+  }
+  .styleshopbtn1:hover{
+    color:white;
+    transition: 1s ease-in;
+    opacity: 1;
+    background-color: rgb(15, 216, 15);
+  }
+
+  /* @keyframes myanimation {
+    0% {background-color: grey;}
+    100% {background-color: green;}
+  } */
