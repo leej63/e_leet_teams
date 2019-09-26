@@ -135,7 +135,6 @@ module.exports = {
                             body.message = "Incorrect!"
                             express_response.jdoodle = body
                             console.log("response from jdoodle", body);
-
                             Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
                             .then(data => {
                                 console.log("Something updated! ", data)

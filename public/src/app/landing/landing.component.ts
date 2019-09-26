@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-landing',
@@ -9,9 +10,14 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class LandingComponent implements OnInit {
 
-  constructor(private _httpService: HttpService, private _route: ActivatedRoute, private _router: Router) { }
+  name = "";
+  constructor(private _httpService: HttpService, private _route: ActivatedRoute, private router: Router, private gameService: GameService) { }
 
   ngOnInit() {
   }
 
+  setName() {
+    this.gameService.setName(this.name);
+    this.router.navigate(['/game_page']);
+  }
 }

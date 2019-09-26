@@ -7,12 +7,21 @@ import { Observable } from 'rxjs'
 })
 export class GameService {
   private socket;  
+  private name = "";
   constructor() {
     this.socket = io();
    }
 
    public sendMessage(message) {
     this.socket.emit('message', message);
+  }
+
+  public setName(name) {
+    this.name = name;
+  }
+
+  public getName() {
+    return this.name;
   }
 
   public getMessages = () => {
