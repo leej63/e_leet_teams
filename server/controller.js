@@ -16,6 +16,8 @@ module.exports = {
     create_game: (req, res)=>{
         var list_of_questions = [];
 
+        // generate();
+
         Question.find()
             .then((data)=>{
                 list_of_questions = data;
@@ -51,67 +53,95 @@ module.exports = {
             clientSecret: "83b142b854a815ddb5ee7830b8a0dff7296358b84645e8f4ab352eb4e3a18c19", //Our jdoodle client seceret
         }
 
-        var response = {
-            jdoodle: {},
-            game: {},
-        }
-
         //enable when you need to create one question
-        // generate();
 
         var current_question = {}
         Question.findOne({name: req.body.question_name})
             .then((data)=>{
                 current_question = data
                 console.log("found question!", data)
+                console.log(program.script)
                 program.script += current_question.input
                 console.log("Program script is :", program.script)
 
-                // request({
-                //     url:'https://api.jdoodle.com/v1/execute',
-                //     method: "POST",
-                //     json: program
-                // },
-                // function (error, response, body) {
+                request({
+                    url:'https://api.jdoodle.com/v1/execute',
+                    method: "POST",
+                    json: program
+                },
+                function (error, response, body) {
         
+                    var express_response = {
+                        jdoodle: {},
+                        game: {},
+                    }
         
-                //     if (body.statusCode == 200){
-                //         if (body.output == current_question.expected_output){
-                //             body.message = "Correct!"
-                //             console.log('body:', body)
-                //             response.jdoodle = body
-                //         }
-                //         else {
-                //             body.message = "Incorrect!"
-                //             console.log('body:', body)
-                //             response.jdoodle = body
-                //         }
-                //     }
-                // })
-                Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
-                    .then(data => {
-                        console.log("Something updated! ", data)
-                        Game.findOne({_id: req.body.game_id})
-                            .then((data)=>{
-                                response.game = data
-                                console.log("Update on Current Game: ", response.game)
-                                if (data.turns > 3){
-                                    response.game.message = "No more submissions left!"
-                                    res.json(response)
-                                } else {
-                                    response.game.message = "Keep going!"
-                                    res.json(response)
-                                }
+                    if (body.statusCode == 200){
+                        console.log('Body Output: ', body.output)
+                        console.log('Expected Output: ', current_question.expected_output)
+                        if (body.output == current_question.expected_output){
+                            body.message = "Correct!"
+                            console.log('body:', body)
+                            express_response.jdoodle = body
+                            console.log("response from jdoodle", body);
+
+                            Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
+                            .then(data => {
+                                console.log("Something updated! ", data)
+                                Game.findOne({_id: req.body.game_id})
+                                    .then((data)=>{
+                                        express_response.game = data
+                                        console.log("Update on Current Game: ", express_response.game)
+                                        if (data.turns > 3){
+                                            express_response.game.message = "No more submissions left!"
+                                            res.json(express_response)
+                                        } else {
+                                            express_response.game.message = "Keep going!"
+                                            res.json(express_response)
+                                        }
+                                    })
+                                    .catch((err)=>{
+                                        console.log("For some reason couldn't find the updated game...")
+                                        res.json(err)
+                                    })
                             })
-                            .catch((err)=>{
-                                console.log("For some reason couldn't find the updated game...")
+                            .catch((err)=> {
+                                console.log("Error at check_code > Question.findOne > Game.updateOne", err)
                                 res.json(err)
                             })
-                    })
-                    .catch((err)=> {
-                        console.log("Error at check_code > Question.findOne > Game.updateOne", err)
-                        res.json(err)
-                    })
+                        }
+                        else {
+                            body.message = "Incorrect!"
+                            express_response.jdoodle = body
+                            console.log("response from jdoodle", body);
+
+                            Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
+                            .then(data => {
+                                console.log("Something updated! ", data)
+                                Game.findOne({_id: req.body.game_id})
+                                    .then((data)=>{
+                                        express_response.game = data
+                                        console.log("Update on Current Game: ", express_response.game)
+                                        if (data.turns > 3){
+                                            express_response.game.message = "No more submissions left!"
+                                            res.json(express_response)
+                                        } else {
+                                            express_response.game.message = "Keep going!"
+                                            res.json(express_response)
+                                        }
+                                    })
+                                    .catch((err)=>{
+                                        console.log("For some reason couldn't find the updated game...")
+                                        res.json(err)
+                                    })
+                            })
+                            .catch((err)=> {
+                                console.log("Error at check_code > Question.findOne > Game.updateOne", err)
+                                res.json(err)
+                            })
+                        }
+                    }
+                })
             })
             .catch(err => res.json(err))
 
@@ -137,7 +167,7 @@ function generate(){
     Question.create(
         {name: "Two Sum",
         full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
-        starting_code: "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:",
+        starting_code: "def twoSum(self, nums: List[int], target: int) -> List[int]:",
         input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
         expected_output: '[0, 1]',   
         }
