@@ -19,7 +19,6 @@ export class GameComponent implements OnInit {
 
   constructor(private _httpService: HttpService, private _route: ActivatedRoute, private _router: Router , private gameService: GameService) { }
   ngOnInit() {
-<<<<<<< HEAD
     this.game_instance = {
       questions: [],
       turns: 0,
@@ -31,24 +30,19 @@ export class GameComponent implements OnInit {
       console.log('game_instance: ', this.game_instance)
       this.current_question = this.game_instance.questions[this.question_number]
       console.log('current_question: ', this.current_question)
-    })
-
-=======
+    });
 
     this.gameService
       .addMessage()
       .subscribe((message: string) => {
         this.messages.push(message);
       });
-
-
   }
 
   sendMessage() {
     this.gameService.send_New_Message(this.message);
     this.messages.push(this.message);
     this.message = '';
->>>>>>> eea741c3502e1b4ac16dbc846b171633ba7ecacf
   }
 
   

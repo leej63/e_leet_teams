@@ -25,14 +25,26 @@ export class GameService {
 
   public send_New_Message(message) {
     this.socket.emit('create-message', message);
-}
+  }
 
-public addMessage = () => {
-  return Observable.create((observer) => {
-      this.socket.on('add-message', (message) => {
-          observer.next(message);
+  public addMessage = () => {
+    return Observable.create((observer) => {
+        this.socket.on('add-message', (message) => {
+            observer.next(message);
+        });
+    });
+  }
+
+  public changeAttempts(num_attempts) {
+    this.socket.emit('change_guesses', num_attempts);
+  }
+
+  public get_remaining_attempts = () => {
+    return Observable.create((observer) => {
+      this.socket.on('decrement_guesses', (attempts) => {
+          observer.next(attempts);
       });
-  });
-}
+    });
+  }
 
 }

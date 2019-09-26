@@ -4,3 +4,12 @@ textarea{
     height: 600px;
     float: right;
 }
+
+.text_editor{
+    border: solid 1px black;
+    width: 90%;
+    height: 600px;
+    float: right;
+    background-color: rgb(255, 254, 247);
+    border-radius: 10px;
+}
