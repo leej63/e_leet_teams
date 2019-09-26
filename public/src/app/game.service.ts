@@ -35,8 +35,8 @@ export class GameService {
     });
   }
 
-  public changeAttempts(num_attempts) {
-    this.socket.emit('change_guesses', num_attempts);
+  public changeAttempts(attempt_dict) {
+    this.socket.emit('change_guesses', attempt_dict);
   }
 
   public get_remaining_attempts = () => {
