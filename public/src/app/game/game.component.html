@@ -3,12 +3,6 @@
     <div class="col-1"></div>
     <div class="col-6 p-0">
         <div class="games p-0">
-            <div class="algorithm my-2" style="height: 250px">
-                <h6>Algorithm:</h6>
-                <p *ngIf="game_instance">{{ current_question['full_prompt'] }}</p>
-                <p>Copy and Paste code below to start! (YOU HAVE TO)</p>
-                <p>{{current_question.starting_code}}</p>
-            </div>
             <div class="text_editor">
                 <app-code-editor [game_instance]="game_instance" [current_question]="current_question" [question_number]="question_number"></app-code-editor> 
             </div>

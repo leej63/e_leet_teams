@@ -23,8 +23,25 @@ module.exports = {
                             }
                         )
                             .then(data => console.log(data))
-                            .catch(err=> res.json(err))
-                        }
+                            .catch(err=> console.log(err))
+                        
+                        Question.create({
+                            name: "Find Sum",
+                            full_prompt: "Given two integers, return sum of two integers",
+                            starting_code: "def sum(num1, num2):",
+                            input: "\nprint(sum(1,1), end='')",
+                            expected_output: '2',
+                        })
+                            .then(data => console.log(data))
+                            .catch(err=> console.log(err))
+                        Question.create({
+                            name: "Find Roman",
+                            full_prompt: "Given a string that happens to be a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999. Please return an integer or it will not run.",
+                            starting_code: "def romanToInt(string):",
+                            input: "\nprint(romanToInt('LIV'), end='')",
+                            expected_output: '54',
+                        })
+                    }
                 })
                 .catch((err)=>res.json(err))
             }
@@ -73,8 +90,6 @@ module.exports = {
             clientId: "d124c25a534e1781ceb5c8e4a7587d60", //Our jsdoodle client id
             clientSecret: "83b142b854a815ddb5ee7830b8a0dff7296358b84645e8f4ab352eb4e3a18c19", //Our jdoodle client seceret
         }
-
-        //enable when you need to create one question
 
         var current_question = {}
         Question.findOne({name: req.body.question_name})

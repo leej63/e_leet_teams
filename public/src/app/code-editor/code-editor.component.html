@@ -1,3 +1,10 @@
+<div class="algorithm my-2" style="height: 250px">
+        <h6>Algorithm:</h6>
+        <p *ngIf="game_instance">{{ current_question['full_prompt'] }}</p>
+        <p>Copy and Paste code below to start! (YOU HAVE TO)</p>
+        <p>{{current_question.starting_code}}</p>
+    </div>
+    <br style="height: 50px">
 <ace-editor (keyup) = "sendMessage()" [(text)]="message" #editor style = 'height: 70%; border-top-left-radius: 10px; border-top-right-radius: 10px'></ace-editor>
 <p>{{error_message}}</p>
 <p>{{game_text}}</p>

@@ -60,6 +60,9 @@ export class CodeEditorComponent implements OnInit {
   }
 
   newGame() {
+    this.question_number += 1;
+    this.current_question = this.game_instance.questions[this.question_number]
+    console.log(this.current_question);
     this.message = "";
     this.rem_guesses = 3;
     this.game_text = `You have ${this.rem_guesses} attempt(s) remaining!`;
@@ -69,9 +72,6 @@ export class CodeEditorComponent implements OnInit {
       'game_text' : this.game_text,
       'game_end' : false,
       'error_message' : ""});
-    //******************************************************************* */
-    //@Sam - add stuff here to grab a new question and grab the new text, etc
-    //******************************************************************* */
   }
 
   checkAnswer() {

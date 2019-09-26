@@ -17,6 +17,7 @@ export class LandingComponent implements OnInit {
   }
 
   setName() {
+    console.log(this.name)
     this.gameService.setName(this.name);
     this.router.navigate(['/game_page']);
   }

@@ -11,7 +11,7 @@ import { send } from 'q';
 })
 export class GameComponent implements OnInit {
   game_instance: any;
-  question_number = 0;
+  question_number = 2;
   current_question: any;
   name = "";
   message = '';
