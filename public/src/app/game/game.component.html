@@ -1,14 +1,16 @@
-<h1 class="text-center display-4 py-3">(E)Leet Teams</h1>
-<div class="row">
-    <div class="col-1"></div>
-    <div class="col-6 p-0">
-        <div class="games p-0">
-            <div class="algorithm my-2">
-                <h6>Algorithm:</h6>
+<div class="container-fluid">
+    <h1 class="text-center display-4 py-3">(E)Leet Teams</h1>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-6 p-0">
+            <div class="games p-0">
+                <div class="algorithm my-2">
+                    <h6>Algorithm:</h6>
+                </div>
+                <div class="text_editor">
+                    <app-code-editor></app-code-editor>
+                </div>  
             </div>
-            <div class="text_editor">
-                <app-code-editor></app-code-editor>
-            </div>  
         </div>
     </div>
     <div class="col-4 p-0">
@@ -22,6 +24,7 @@
             <textarea style="width: 100%" cols="10" rows="2" [(ngModel)] ="message"></textarea>
             <button style="height: 25px" (click)="sendMessage()">Send</button>
         </div>
+        <div class="col-1"></div>
     </div>
 
     <div class="col-1"></div>
@@ -34,9 +37,9 @@
         <div class="res_msg">
                         
         </div>
+        <div class="col"></div>
+        <div class="col"></div>
     </div>
-    <div class="col"></div>
-    <div class="col"></div>
 </div>
 <img class="bg" src="https://i0.wp.com/www.buzzmasters.ca/wp-content/uploads/2019/05/trianglify.png?ssl=1">
 <!-- <img class="bg" src="https://i.pinimg.com/originals/8f/af/05/8faf05b2a755a5a1d51238313ddc1a0f.png"> -->
