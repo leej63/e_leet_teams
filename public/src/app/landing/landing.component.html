@@ -16,8 +16,9 @@
         <div class="col"></div>
         <div class="col">
             <form class="join">
-                <input type="text" [(ngModel)] = 'name' name="username" class="form-control text-center mt-3" id="username" placeholder="Please enter your name..."><br>
-                <button (click) = 'setName()' class="styleshopbtn1 btn btn-lg py-3 px-5">Team Up!</button>
+                <input #user = "ngModel" required type="text" [(ngModel)] = 'name' name="username" class="form-control text-center mt-3" id="username" placeholder="Please enter your name..."><br>
+                <p *ngIf="user.errors?.required" style = 'color:purple'>Name is required to join.</p>
+                <button [disabled]="user.errors" (click) = 'setName()' class="styleshopbtn1 btn btn-lg py-3 px-5">Team Up!</button>
             </form>
         </div>
         <div class="col"></div> 
