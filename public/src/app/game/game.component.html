@@ -1,43 +1,34 @@
-<div class="container-fluid">
-    <h1 class="text-center display-4 py-3">(E)Leet Teams</h1>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-6 p-0">
-            <div class="games p-0">
-                <div class="algorithm my-2">
-                    <h6>Algorithm:</h6>
-                </div>
-                <div class="text_editor">
-                    <app-code-editor></app-code-editor>
-                    <div class="countdown_timer">
-                        <p id="timer" *ngIf="seconds >= 10">{{ minutes }}m : {{ seconds }}s</p>
-                        <p id="timer" *ngIf="seconds < 10">{{ minutes }}m: 0{{ seconds }}s</p>
-                    </div>
-                </div>  
+<h1 class="text-center display-4 py-3">(E)Leet Teams</h1>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col-6 p-0">
+        <div class="games p-0">
+            <div class="text_editor">
+                <app-code-editor [game_instance]="game_instance" [current_question]="current_question" [question_number]="question_number"></app-code-editor> 
             </div>
         </div>
-        <div class="col-4 p-0">
-            <div class="team_chat m-2">
-                <h6>Team chat:</h6>
-                <div style="overflow: auto; height: 85%;">
-                    <p *ngFor="let message of messages"> {{message}}</p>    
-                </div>
-                <textarea style="width: 100%" cols="10" rows="2" [(ngModel)] ="message"></textarea>
-                <button style="height: 25px" (click)="sendMessage()">Send</button>
-            </div>
-        </div>
-        <div class="col"></div>
     </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col text-center">
-            <button class="btn btn-success px-4 py-2">Submit</button>
-        </div>
-        <div class="col">
-            <div class="res_msg">
-                            
+    <div class="col-4 p-0">
+        <div class="team_chat m-2">
+            <h6>Team chat:</h6>
+
+            <div style="overflow: auto; height: 80%;">
+                <p *ngFor="let message of messages"> {{message}}</p>
+               
             </div>
+            <textarea style="width: 100%" cols="10" rows="2" [(ngModel)] ="message"></textarea>
+            <button style="height: 25px" (click)="sendMessage()">Send</button>
         </div>
+        <div class="col-1"></div>
+    </div>
+
+    <div class="col-1"></div>
+</div>
+<div class="row">
+    <div class="col text-center">
+    </div>
+    <div class="col">
+        <div class="col"></div>
         <div class="col"></div>
     </div>
 </div>

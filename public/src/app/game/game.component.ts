@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GameService } from '../game.service';
-import { delay } from 'q';
-
 
 @Component({
   selector: 'app-game',
@@ -11,16 +9,29 @@ import { delay } from 'q';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
-
+  game_instance: any;
+  question_number = 0;
+  current_question: any;
+  name = "";
   message = '';
   messages = [];
-  seconds = 0;
-  minutes = 25;
-  counter = 1500;
 
-  constructor(private _httpService: HttpService, private _route: ActivatedRoute, private _router: Router , private gameService: GameService) { }
+  constructor(private _httpService: HttpService, private _route: ActivatedRoute, private router: Router , private gameService: GameService) { }
   ngOnInit() {
-    this.countdownTimer();
+    if(this.gameService.getName() == "")
+      this.router.navigate(['/']);
+    this.game_instance = {
+      questions: [],
+      turns: 0,
+      message: '',
+    }
+    let observable = this._httpService.new_game_instance();
+    observable.subscribe((data)=>{
+      this.game_instance = data
+      console.log('game_instance: ', this.game_instance)
+      this.current_question = this.game_instance.questions[this.question_number]
+      console.log('current_question: ', this.current_question)
+    })
 
     this.gameService
       .addMessage()
@@ -28,32 +39,16 @@ export class GameComponent implements OnInit {
         this.messages.push(message);
       });
 
-
+    this.name = this.gameService.getName();
+    this.gameService.send_New_Message(`${this.name} has joined!`);
+    this.messages.push(`${this.name} has joined!`);
   }
 
   sendMessage() {
-    this.gameService.send_New_Message(this.message);
-    this.messages.push(this.message);
+    var new_msg = `${this.name}: ${this.message}`
+    this.gameService.send_New_Message(new_msg);
+    this.messages.push(new_msg);
     this.message = '';
-  }
-
-  async countdownTimer() {
-    for (let i = 1500; i > 0; i--){
-      await delay(1000);
-      this.counter = this.counter -1;
-      // console.log(this.counter)
-      if(this.counter == 0){
-        this._router.navigate(['/']);                       // PLACEHOLDER - need to have redirect to win or loss page
-        return
-      }
-      if(this.seconds == 0){
-        this.seconds = 59;
-        this.minutes = this.minutes - 1;
-      }
-      else{
-        this.seconds = this.seconds - 1;
-      }
-    }
   }
 
 }
