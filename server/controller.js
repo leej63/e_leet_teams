@@ -19,29 +19,28 @@ module.exports = {
         Question.find()
             .then((data)=>{
                 list_of_questions = data;
+
+                Game.create(
+                    {
+                        questions: list_of_questions,
+                        turns: 0,
+                    },
+                    //req.body.users MUST be a list of objects with the property 'name'
+                )
+                    .then((data)=>{
+                        res.json(data)
+                        console.log("Game created with these questions: ", data['questions'])
+                    })
+                    .catch((err)=>{
+                        res.json(err)
+                        console.log("There was an error with create a game instance")
+                    })
             })
             .catch((err)=>{
                 console.log("There was an error with generating list of questions");
             })
-        Game.create(
-            {questions: list_of_questions},
-            //req.body.users MUST be a list of objects with the property 'name'
-            {users: req.body.users}
-        )
-            .then((data)=>{
-                res.json(data)
-                console.log("Game created with these users: ", data['users'])
-            })
-            .catch((err)=>{
-                res.json(err)
-                console.log("There was an error with create a game instance")
-            })
     },
     check_code: (req, res)=>{
-        //Replace with Post Man or req.body
-        // var temporary_script = {
-        //     "script": "def sum(num1, num2): return num1 + num2"
-        // }
 
         var program = {
             //Remember to replace
@@ -52,63 +51,102 @@ module.exports = {
             clientSecret: "83b142b854a815ddb5ee7830b8a0dff7296358b84645e8f4ab352eb4e3a18c19", //Our jdoodle client seceret
         }
 
-        //Temporary question. Pull question id from req.body
-        var question = {
-            name: "Add Two",
-            full_promt: 'In Python, please add two integers. Return Sum',
-            input: '\nprint(sum(2, 2)).rstrip()',
-            expected_output: 4,
+        var response = {
+            jdoodle: {},
+            game: {},
         }
 
-        // temporary disabled. Enable when Question from models is ready
+        //enable when you need to create one question
+        // generate();
+
         var current_question = {}
-        Question.findOne({_id: req.params})
+        Question.findOne({name: req.body.question_name})
             .then((data)=>{
-                current_question = data;
+                current_question = data
+                console.log("found question!", data)
+                program.script += current_question.input
+                console.log("Program script is :", program.script)
+
+                // request({
+                //     url:'https://api.jdoodle.com/v1/execute',
+                //     method: "POST",
+                //     json: program
+                // },
+                // function (error, response, body) {
+        
+        
+                //     if (body.statusCode == 200){
+                //         if (body.output == current_question.expected_output){
+                //             body.message = "Correct!"
+                //             console.log('body:', body)
+                //             response.jdoodle = body
+                //         }
+                //         else {
+                //             body.message = "Incorrect!"
+                //             console.log('body:', body)
+                //             response.jdoodle = body
+                //         }
+                //     }
+                // })
+                Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
+                    .then(data => {
+                        console.log("Something updated! ", data)
+                        Game.findOne({_id: req.body.game_id})
+                            .then((data)=>{
+                                response.game = data
+                                console.log("Update on Current Game: ", response.game)
+                                if (data.turns > 3){
+                                    response.game.message = "No more submissions left!"
+                                    res.json(response)
+                                } else {
+                                    response.game.message = "Keep going!"
+                                    res.json(response)
+                                }
+                            })
+                            .catch((err)=>{
+                                console.log("For some reason couldn't find the updated game...")
+                                res.json(err)
+                            })
+                    })
+                    .catch((err)=> {
+                        console.log("Error at check_code > Question.findOne > Game.updateOne", err)
+                        res.json(err)
+                    })
             })
             .catch(err => res.json(err))
-        program.script += current_question.input
 
         ///temporary. When Question is ready, replace 'question' with 'current_question'
-        program.script += question.input
-
-        request({
-            url:'https://api.jdoodle.com/v1/execute',
-            method: "POST",
-            json: program
-        },
-        function (error, response, body) {
-
-
-            if (body.statusCode == 200){
-                if (parseInt(body.output) == parseInt(question.expected_output)){
-                    body.message = "Correct!"
-                    console.log('body:', body)
-                    res.json(body)
-                }
-                else {
-                    body.message = "Incorrect!"
-                    console.log('body:', body)
-                    res.json(body)
-                }
-            }
-            //example json response to Angular Application below:
+        // program.script += question.input
+        
+            // example json response to Angular Application below:
             // {
-            //     "output": "0\n",
+            //     "output": "0",
             //     "statusCode": 200,
             //     "memory": "5284",
             //     "cpuTime": "0.03",
             //     "message": "Incorrect!"
             // }
 
-        })
-    },
-    generate_questions: (req, res)=>{
-        Question.create(
-            {name: "Two Sum"},
-            {full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice."},
-            {input: '\nprint(twoSum([2,7,11,15], 9)'},
-            {expected_output: '[0, 1]'}
-        )
+        // })
     }
 }
+
+function generate(){
+    console.log("we are creating")
+
+    Question.create(
+        {name: "Two Sum",
+        full_prompt: "Given an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.",
+        starting_code: "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:",
+        input: "\nprint(twoSum([2,7,11,15], 9), end ='')", 
+        expected_output: '[0, 1]',   
+        }
+    )
+        .then(data => console.log(data));
+}
+
+// Workable Solution for TwoSum Python3
+// {
+// 	"script": "def twoSum(nums, target):\n    dict = {}\n    for i in range(len(nums)):\n        if target-nums[i] not in dict:\n            dict[nums[i]]=i\n        else:\n            return [dict[target-nums[i]],i]",
+// 	"question_name": "Two Sum"
+// }

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AceEditorModule } from 'ng2-ace-editor';
 import { HttpService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +22,8 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AceEditorModule
   ],
   providers: [HttpService, GameService],
   bootstrap: [AppComponent]

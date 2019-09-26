@@ -13,6 +13,10 @@ var QuestionSchema = mongoose.Schema({
         type: String,
         require: true
     },
+    starting_code: {
+        type: String,
+        require: true
+    },
     input: {
         type: String,
         require: true

@@ -6,24 +6,15 @@ mongoose.connect('mongodb://localhost/e_leet_teams_db',
     {useNewUrlParser: true}
 );
 
-
-var UserSchema = mongoose.Schema({
-    name: {
-        type: String,
-        require: [true, "Name is required"],
-        minlength: [3, "Name must be 3 or more characters"],
-        // unique: true
-    },
-    score: {
-        type: Number,
-        default: 0,
-        require: true
-    }
-});
-
 var GameSchema = mongoose.Schema({
     questions: [],
-    users: [UserSchema],
+    turns: {
+        type: Number,
+        require: true
+    },
+    message: {
+        type: String
+    }
 }, {timestamps: true}
 );
 
