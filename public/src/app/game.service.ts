@@ -32,8 +32,32 @@ export class GameService {
     });
   }
 
+  public startGame() {
+    this.socket.emit('start_game', true);
+  }
+
+  public beginGame = () => {
+    return Observable.create((observer) => {
+      this.socket.on('begin_game', () => {
+          observer.next(true);
+      });
+  });
+  }
+
   public send_New_Message(message) {
     this.socket.emit('create-message', message);
+  }
+
+  public newGame(data) {
+    this.socket.emit('new_game', data);
+  }
+
+  public begin_new_game = () => {
+    return Observable.create((observer) => {
+      this.socket.on('initate_new_game', (data) => {
+          observer.next(data);
+      });
+    });
   }
 
   public addMessage = () => {
