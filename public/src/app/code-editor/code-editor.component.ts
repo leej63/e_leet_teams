@@ -36,7 +36,7 @@ export class CodeEditorComponent implements OnInit {
     console.log(this.current_question);
     this.message = this.gameService.getMessage();
     this.rem_guesses = this.gameService.getRemGuesses();
-    this.gameEnd = this.gameService.getgameEnd();
+    //this.gameEnd = this.gameService.getgameEnd();
     this.error_message = this.gameService.getErrorMessage();
     this.seconds = this.gameService.getSeconds();
     this.minutes = this.gameService.getMinutes();
