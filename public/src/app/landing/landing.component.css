@@ -46,76 +46,73 @@ img.bg {
   display: inline-block;
 }
 .logo:hover{
-  background-color:   rgba(255, 255, 255, 0.4);
+  background-color:   rgba(255, 255, 255, 0.6);
   transition: 1.25s;
 }
 
-.styleshopbtn1{
-    background-color: rgb(94, 94, 94);
-    color: white;
-    border: 0;
-    margin-bottom: 200px;
-    margin-top: 50px;
+.circle {
+  background-color: rgb(110, 110, 110);
+  color: white;
+  border: 0;
+  margin-bottom: 200px;
+  margin-top: 50px;
+  width: 250px;
+  height: 250px;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 100%;
+  font-size: inherit;
+  font-weight: 700;
+  position: relative;
+  vertical-align: middle;
 }
-  
-  .circle {
-    width: 250px;
-    height: 250px;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 0;
-    box-sizing: border-box;
-    border-radius: 100%;
-    font-size: inherit;
-    font-weight: 700;
-    position: relative;
-    vertical-align: middle;
-  }
-  .circle::before, .circle::after {
-    box-sizing: inherit;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 100%;
-  }
-  .circle:hover {
-    color: rgb(255, 251, 0);
-    background-color: rgb(66, 66, 66);
-    transition: 2s ease-out;
-  }
-  .circle::before, .circle::after {
-    top: 0;
-    left: 0;
-  }
-  .circle::before {
-    border: 7px solid transparent;
-  }
-  .circle:hover::before {
-    border-top-color:  rgb(255, 251, 0);
-    border-right-color:  rgb(255, 251, 0);
-    border-bottom-color:  rgb(255, 251, 0);
-    transition:
-      border-top-color 2s linear,
-      border-right-color 2s linear,
-      border-bottom-color 2s linear
-    ;
-  }
-  .circle::after {
-    border: 0 solid;
-  }
-  .circle:hover::after {
-    border-top: 7px solid  rgb(255, 251, 0);
-    border-left-width: 7px;
-    border-right-width: 7px;
-    transform: rotate(270deg);
-    transition:
-      transform 2s linear,
-      border-left-width 2s linear
-    ;
-  }
+.circle::before, .circle::after {
+  box-sizing: inherit;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+}
+.circle:hover {
+  color: rgb(255, 251, 0);
+  background-color: rgb(51, 51, 51);
+  transition: 2s ease-out;
+}
+.circle::before, .circle::after {
+  top: 0;
+  left: 0;
+}
+.circle::before {
+  border: 7px solid transparent;
+}
+.circle:hover::before {
+  border-top-color:  rgb(255, 251, 0);
+  border-right-color:  rgb(255, 251, 0);
+  border-bottom-color:  rgb(255, 251, 0);
+  transition:
+    border-top-color 1.75s linear,
+    border-right-color 1.5s linear .25s,
+    border-bottom-color 1.25s linear .5s
+  ;
+}
+.circle::after {
+  border: 0 solid;
+}
+.circle:hover::after {
+  border-top: 7px solid  rgb(255, 251, 0);
+  border-left-width: 7px;
+  border-right-width: 7px;
+  transform: rotate(270deg);
+  transition:
+    transform 1s linear,
+    border-left-width 1s linear
+  ;
+}
   
 .teamup{
   margin: 0;

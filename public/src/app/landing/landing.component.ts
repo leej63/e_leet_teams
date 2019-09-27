@@ -14,7 +14,7 @@ export class LandingComponent implements OnInit {
   constructor(private _httpService: HttpService, private _route: ActivatedRoute, private router: Router, private gameService: GameService) { }
 
   scroll(el: HTMLElement) {
-    el.scrollIntoView();
+    el.scrollIntoView({ behavior: 'smooth'});
   }
 
   ngOnInit() {
