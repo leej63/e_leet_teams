@@ -118,6 +118,7 @@ export class CodeEditorComponent implements OnInit {
     this.rem_guesses = 3;
     this.game_text = `You have ${this.rem_guesses} attempt(s) remaining!`;
     this.gameEnd = false;
+    this.error_message = '';
     this.gameService.setgameEnd(false);
     this.seconds = 0;
     this.minutes = 25;
@@ -163,6 +164,7 @@ export class CodeEditorComponent implements OnInit {
       else if (this.rem_guesses == 0) {
         this.gameEnd = true;
         this.game_text = "You are out of attempts :("
+        this.error_message = '';
         this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
           'game_text' : "You are out of attempts :(",
           'game_end' : true,
