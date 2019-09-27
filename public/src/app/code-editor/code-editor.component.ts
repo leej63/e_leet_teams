@@ -12,9 +12,9 @@ import { delay } from 'q';
 export class CodeEditorComponent implements OnInit {
   @Input() game_instance: any;
   @Input() current_question: any;
-  @Input() question_number: any;
+  @Input() question_number: number;
   @ViewChild('editor', {static: false}) editor;
-  //For Sam's code: message will contain the code that the users are sending
+
   message : String = '';
   rem_guesses = 3;
   gameEnd : Boolean = false;
@@ -22,7 +22,7 @@ export class CodeEditorComponent implements OnInit {
   error_message : String = "";
   seconds = 0;
   minutes = 25;
-  counter = 10;
+  counter = 1500;
   game_text : String = `You have ${this.rem_guesses} attempt(s) remaining!`
   constructor(
     private gameService: GameService,
@@ -31,19 +31,35 @@ export class CodeEditorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.current_question = this.gameService.get_current_question();
+    console.log(`This is from the code-editor`);
+    console.log(this.current_question);
+    this.message = this.gameService.getMessage();
+    this.rem_guesses = this.gameService.getRemGuesses();
+    this.gameEnd = this.gameService.getgameEnd();
+    this.error_message = this.gameService.getErrorMessage();
+    this.seconds = this.gameService.getSeconds();
+    this.minutes = this.gameService.getMinutes();
+    this.counter = this.gameService.getCounter();
+    this.game_text = this.gameService.getGameText();
+
     this.gameService
       .getMessages()
       .subscribe((message: string) => {
         this.message = message;
+        this.gameService.setMessage(message);
       });
     this.gameService
       .get_remaining_attempts()
       .subscribe((attempts) => {
-        console.log(attempts);
         this.rem_guesses = attempts['rem_attempts'];
         this.gameEnd = attempts['game_end'];
         this.game_text = attempts['game_text'];
-        this.error_message = attempts['error_message']
+        this.error_message = attempts['error_message'];
+        this.gameService.setRemGuesses(attempts['rem_attempts']);
+        this.gameService.setgameEnd(attempts['rem_attempts']);;
+        this.gameService.setGameText(attempts['game_text']);
+        this.gameService.setErrorMessage(attempts['error_message']);
         if (this.rem_guesses == 0) {
           this.gameEnd = true;
         }
@@ -52,6 +68,7 @@ export class CodeEditorComponent implements OnInit {
       .beginGame()
       .subscribe((data)=> {
         this.gameStart = true;
+        this.gameService.setgameStart(true);
         this.countdownTimer();
       })
 
@@ -60,12 +77,21 @@ export class CodeEditorComponent implements OnInit {
       .subscribe((data) => {
         if('current_question' in data) {
           this.current_question = data['current_question'];
+          this.gameService.set_current_question(data['current_question']);
+          this.game_instance = data['game_instance'];
+          this.gameService.set_game_instance(data['game_instance']);
+          this.question_number = data['number']
+          this.gameService.set_question_number(data['number']);
         }
         this.seconds = data['seconds'];
         this.minutes = data['minutes'];
         this.counter = data['counter'];
+        this.gameService.setSeconds(data['seconds']);
+        this.gameService.setMinutes(data['minutes']);
+        this.gameService.setCounter(data['counter']);
         this.countdownTimer();
       });
+    
   }
   
   ngAfterViewInit() {
@@ -83,13 +109,16 @@ export class CodeEditorComponent implements OnInit {
   }
 
   newGame() {
+    console.log('this is the question numbers');
+    console.log(this.question_number)
     this.question_number += 1;
-    this.current_question = this.game_instance.questions[this.question_number]
-    console.log(this.current_question);
-    this.message = "";
+    this.current_question = this.game_instance.questions[this.question_number];
+    this.gameService.set_current_question(this.current_question);
+    this.message = "Start Coding!";
     this.rem_guesses = 3;
     this.game_text = `You have ${this.rem_guesses} attempt(s) remaining!`;
     this.gameEnd = false;
+    this.gameService.setgameEnd(false);
     this.seconds = 0;
     this.minutes = 25;
     this.counter = 1500;
@@ -97,6 +126,8 @@ export class CodeEditorComponent implements OnInit {
     this.countdownTimer();
     this.gameService.newGame({
       'current_question' : this.current_question,
+      'game_instance' : this.game_instance,
+      'number' : this.question_number,
       'seconds' : this.seconds,
       'minutes' : this.minutes,
       'counter' : this.counter
@@ -154,6 +185,7 @@ export class CodeEditorComponent implements OnInit {
     for (let i = 1500; i > 0; i--){
       await delay(1000);
       this.counter = this.counter -1;
+      this.gameService.setCounter(this.counter);
       // console.log(this.counter)
       if(this.counter == -1){
         this.gameEnd = true;
@@ -163,10 +195,13 @@ export class CodeEditorComponent implements OnInit {
       }
       if(this.seconds == 0){
         this.seconds = 59;
+        this.gameService.setSeconds(59);
         this.minutes = this.minutes - 1;
+        this.gameService.setMinutes(this.minutes);
       }
       else{
         this.seconds = this.seconds - 1;
+        this.gameService.setSeconds(this.seconds);
       }
     }
   }

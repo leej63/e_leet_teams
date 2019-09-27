@@ -1,5 +1,5 @@
 <div class="algorithm my-2" style="height: 250px; margin-bottom: 500px">
-    <div *ngIf="gameStart">
+    <div *ngIf="gameStart && current_question">
         <h3>Algorithm:</h3>
         <p *ngIf="game_instance">{{ current_question['full_prompt'] }}</p>
         <p>Copy and Paste code below to start! (YOU HAVE TO)</p>
