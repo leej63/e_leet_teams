@@ -16,68 +16,92 @@ img.bg {
     opacity: .8;
   }
 
-  .about_us{
-    border: 1px gray solid;
-    border-radius: 10px;
-    background-color: rgba(255, 254, 247, 0.2);
-    height: 90%;
-    width: 100%;
-  }
+.bigwords{
+  color: rgb(255, 251, 0);
+  background-color: rgba(71, 71, 71, 0.85);
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding-top: 1%;
+  padding-bottom: 2%;
+}
 
-  .styleshopbtn1{
-      background-color: rgb(94, 94, 94);
-      color: white;
-      border: 0;
+.about_us{
+  border: 1px gray solid;
+  border-radius: 10px;
+  background-color:  rgba(184, 184, 184, 0.2);
+  height: 100%;
+  width: 100%;
+  font-size: large;
+}
+
+.styleshopbtn1{
+    background-color: rgb(94, 94, 94);
+    color: white;
+    border: 0;
+    margin-bottom: 200px;
+    margin-top: 50px;
+}
+  
+  .circle {
+    width: 250px;
+    height: 250px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 100%;
+    font-size: inherit;
+    font-weight: 700;
+    position: relative;
+    vertical-align: middle;
   }
-    
-    .circle {
-      width: 175px;
-      height: 175px;
-      display: inline-block;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      border: 0;
-      box-sizing: border-box;
-      border-radius: 100%;
-      font-size: inherit;
-      font-weight: 700;
-      position: relative;
-      vertical-align: middle;
-    }
-    .circle::before, .circle::after {
-      box-sizing: inherit;
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 100%;
-    }
-    .circle:hover {
-      color: rgb(75, 240, 75);
-      transition: 1s ease-out;
-    }
-    .circle::before, .circle::after {
-      top: 0;
-      left: 0;
-    }
-    .circle::before {
-      border: 4px solid transparent;
-    }
-    .circle:hover::before {
-      border-top-color:  rgb(75, 240, 75);
-      border-right-color:  rgb(75, 240, 75);
-      border-bottom-color:  rgb(75, 240, 75);
-      transition: border-top-color 1s linear 0.5s, border-right-color 1.5s linear 0.5s, border-bottom-color 2s linear 2s;
-    }
-    .circle::after {
-      border: 0 solid;
-    }
-    .circle:hover::after {
-      border-top: 4px solid  rgb(75, 240, 75);
-      border-left-width: 4px;
-      border-right-width: 4px;
-      transform: rotate(270deg);
-      transition: transform 2s linear 0s, border-left-width 0s linear 0.5s;
-    }
-    
+  .circle::before, .circle::after {
+    box-sizing: inherit;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+  }
+  .circle:hover {
+    color: rgb(255, 251, 0);
+    background-color: rgb(66, 66, 66);
+    transition: 2s ease-out;
+  }
+  .circle::before, .circle::after {
+    top: 0;
+    left: 0;
+  }
+  .circle::before {
+    border: 4px solid transparent;
+  }
+  .circle:hover::before {
+    border-top-color:  rgb(255, 251, 0);
+    border-right-color:  rgb(255, 251, 0);
+    border-bottom-color:  rgb(255, 251, 0);
+    transition:
+      border-top-color 2s linear,
+      border-right-color 2s linear,
+      border-bottom-color 2s linear
+    ;
+  }
+  .circle::after {
+    border: 0 solid;
+  }
+  .circle:hover::after {
+    border-top: 4px solid  rgb(255, 251, 0);
+    border-left-width: 4px;
+    border-right-width: 4px;
+    transform: rotate(270deg);
+    transition:
+      transform 2s linear,
+      border-left-width 2s linear
+    ;
+  }
+  
+.teamup{
+  margin: 0;
+  padding: 0;
+}
