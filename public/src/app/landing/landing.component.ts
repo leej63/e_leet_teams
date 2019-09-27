@@ -13,6 +13,10 @@ export class LandingComponent implements OnInit {
   name = "";
   constructor(private _httpService: HttpService, private _route: ActivatedRoute, private router: Router, private gameService: GameService) { }
 
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
+  }
+
   ngOnInit() {
   }
 
