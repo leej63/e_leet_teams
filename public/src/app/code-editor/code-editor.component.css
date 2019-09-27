@@ -13,3 +13,8 @@ textarea{
     background-color: rgb(255, 254, 247);
     border-radius: 10px;
 }
+.countdown_timer{
+    padding: 2%;
+    color: red;
+    font-size: large;
+}

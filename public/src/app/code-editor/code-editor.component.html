@@ -1,12 +1,12 @@
-<div class="algorithm my-2" style="height: 250px">
+<div class="algorithm my-2" style="height: 250px; margin-bottom: 500px">
     <div *ngIf="gameStart">
-        <h6>Algorithm:</h6>
+        <h3>Algorithm:</h3>
         <p *ngIf="game_instance">{{ current_question['full_prompt'] }}</p>
         <p>Copy and Paste code below to start! (YOU HAVE TO)</p>
         <p>{{current_question.starting_code}}</p>
         <div class="countdown_timer">
-            <p id="timer" *ngIf="seconds >= 10">{{ minutes }}m : {{ seconds }}s</p>
-            <p id="timer" *ngIf="seconds < 10">{{ minutes }}m: 0{{ seconds }}s</p>
+            <h3 id="timer" *ngIf="seconds >= 10">{{ minutes }}m : {{ seconds }}s</h3>
+            <h3 id="timer" *ngIf="seconds < 10">{{ minutes }}m: 0{{ seconds }}s</h3>
         </div>
     </div>
     <button *ngIf="!gameStart"  (click)="startGame()">Start!</button>
