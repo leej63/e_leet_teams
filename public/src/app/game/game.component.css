@@ -3,35 +3,21 @@
     margin-right: auto;
 }
 
-.algorithm{
-    border: solid 1px black;
-    width: 90%;
-    height: 125px;
-    float: right;
-    background-color: rgba(255, 254, 247, .75);
-    border-radius: 10px;
-}
-
 .text_editor{
-    border: solid 1px black;
+    /* border: solid 1px black; */
     width: 90%;
-    height: 600px;
+    height: 733px;
     float: right;
-    background-color: rgb(255, 254, 247);
+    background-color: rgba(255, 254, 247, .30);
     border-radius: 10px;
 }
 
 .team_chat{
-    border: solid 1px black;
+    /* border: solid 1px black; */
     width: 90%;
     height: 733px;
-    background-color: rgba(255, 254, 247, .75);
+    background-color: rgba(255, 254, 247, .30);
     border-radius: 10px;
-}
-
-.res_msg{
-    border: solid 2px black;
-    width: 10%;
 }
 
 img.bg {
@@ -50,11 +36,6 @@ img.bg {
     
     z-index: -1;
     opacity: .8;
-  }
-
-  .countdown_timer{
-      font-size: 24px;
-      font-weight: bold;
   }
 
   h3{

@@ -1,19 +1,22 @@
-<div class="algorithm my-2" style="height: 250px; margin-bottom: 500px">
-    <div *ngIf="gameStart && current_question">
-        <h3>Algorithm:</h3>
+<div class="algorithm px-3 pt-3">
+    <div class="algo_box p-3" *ngIf="gameStart && current_question">
+        <h5 class="algo_title">Algorithm:</h5>
         <p *ngIf="game_instance">{{ current_question['full_prompt'] }}</p>
         <p>Copy and Paste code below to start! (YOU HAVE TO)</p>
         <p>{{current_question.starting_code}}</p>
         <div class="countdown_timer">
-            <h3 id="timer" *ngIf="seconds >= 10">{{ minutes }}m : {{ seconds }}s</h3>
-            <h3 id="timer" *ngIf="seconds < 10">{{ minutes }}m: 0{{ seconds }}s</h3>
+            <h6 id="timer" *ngIf="seconds >= 10">Time remaining - {{ minutes }}m: {{ seconds }}s</h6>
+            <h6 id="timer" *ngIf="seconds < 10">Time remaining - {{ minutes }}m: 0{{ seconds }}s</h6>
         </div>
     </div>
     <button *ngIf="!gameStart" (click)="startGame()" class="start_button btn btn-outline-primary">Start!</button>
 </div>
 <br style="height: 50px">
-<ace-editor (keyup) = "sendMessage()" [(text)]="message" #editor style = 'height: 70%; border-top-left-radius: 10px; border-top-right-radius: 10px'></ace-editor>
-<p>{{error_message}}</p>
-<p>{{game_text}}</p>
-<button *ngIf = '!gameEnd' (click)="checkAnswer()">Send</button>
-<button *ngIf = 'gameEnd' (click) = "newGame()">Get a new question!</button>
+<ace-editor (keyup)="sendMessage()" [(text)]="message" #editor></ace-editor>
+<div>
+    <p class="game_text mx-4 mt-2">{{game_text}}</p>
+    <button *ngIf = '!gameEnd' (click)="checkAnswer()" class="submit_button btn btn-primary mx-4 mt-2">Submit</button>
+    <button *ngIf = 'gameEnd' (click) = "newGame()" class="new_algo btn btn-primary mx-4 mt-2">Get a new question!</button>
+</div>
+
+<p class="err_msg mx-3 mt-3">{{error_message}}</p>

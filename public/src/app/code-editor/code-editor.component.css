@@ -1,26 +1,22 @@
-textarea{
-    border-radius: 10px;
-    width: 90%;
-    height: 600px;
-    float: right;
-}
-
-.text_editor{
-    border: solid 1px black;
-    width: 90%;
-    height: 600px;
-    float: right;
-    background-color: rgb(255, 254, 247);
-    border-radius: 10px;
-}
 .countdown_timer{
-    padding: 2%;
+    padding: 1%;
     color: red;
     font-size: large;
+    text-align: center;
+    margin-bottom: 0px;
 }
 
-.algorithm{
+.algo_box{
     background-color: rgba(255, 254, 247, .75);
+    border-radius: 10px;
+}
+
+.algo_title{
+    text-align: center;
+}
+
+.algo_box p{
+    margin-bottom: 5px;
 }
 
 .start_button{
@@ -29,4 +25,32 @@ textarea{
     left: 38%;
     width: 25%;
     padding: 2%;
+}
+
+ace-editor{
+    border-radius: 10px;
+    width: 95%;
+    height: 55%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.new_algo{
+    display: inline-block;
+    float: right;
+}
+
+.submit_button{
+    display: inline-block;
+    float: right;
+}
+
+.err_msg{
+    display: inline-block;
+    color: red;
+}
+
+.game_text{
+    display: inline-block;
+    font-weight: bold;
 }
