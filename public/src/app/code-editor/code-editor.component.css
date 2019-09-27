@@ -18,3 +18,15 @@ textarea{
     color: red;
     font-size: large;
 }
+
+.algorithm{
+    background-color: rgba(255, 254, 247, .75);
+}
+
+.start_button{
+    position: relative;
+    top: 50%;
+    left: 38%;
+    width: 25%;
+    padding: 2%;
+}

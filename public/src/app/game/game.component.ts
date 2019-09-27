@@ -10,7 +10,7 @@ import { GameService } from '../game.service';
 })
 export class GameComponent implements OnInit {
   game_instance: any;
-  question_number = 0;
+  question_number: number = 0;
   current_question: any;
   name = "";
   message = '';
@@ -25,13 +25,20 @@ export class GameComponent implements OnInit {
       turns: 0,
       message: '',
     }
-    let observable = this._httpService.new_game_instance();
-    observable.subscribe((data)=>{
-      this.game_instance = data
-      console.log('game_instance: ', this.game_instance)
-      this.current_question = this.game_instance.questions[this.question_number]
-      console.log('current_question: ', this.current_question)
-    })
+    if (!this.gameService.get_game_instance()) {
+      let observable = this._httpService.new_game_instance();
+      observable.subscribe((data)=>{
+        this.game_instance = data
+        console.log('game_instance: ', this.game_instance)
+        this.current_question = this.game_instance.questions[this.question_number]
+        console.log('current_question: ', this.current_question)
+      })
+    }
+    else {
+      this.game_instance = this.gameService.get_game_instance();
+      this.current_question = this.gameService.get_current_question();
+      this.question_number = this.gameService.get_question_number();
+    }
 
     this.gameService
       .addMessage()
