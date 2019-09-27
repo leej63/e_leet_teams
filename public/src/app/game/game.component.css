@@ -8,7 +8,7 @@
     width: 90%;
     height: 125px;
     float: right;
-    background-color: rgb(255, 254, 247);
+    background-color: rgba(255, 254, 247, .75);
     border-radius: 10px;
 }
 
@@ -25,7 +25,7 @@
     border: solid 1px black;
     width: 90%;
     height: 733px;
-    background-color: rgb(255, 254, 247);
+    background-color: rgba(255, 254, 247, .75);
     border-radius: 10px;
 }
 
@@ -52,11 +52,13 @@ img.bg {
     opacity: .8;
   }
 
-  button{
-    margin-left: 30%;
-  }
-
   .countdown_timer{
       font-size: 24px;
       font-weight: bold;
   }
+
+  h3{
+      margin: 10px, 0px, 10px, 0px;
+  }
+
+  
