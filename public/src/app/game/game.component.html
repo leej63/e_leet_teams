@@ -1,4 +1,4 @@
-<h1 class="text-center display-4 py-3">(E)Leet Teams</h1>
+<h1 class="text-center display-4 py-3">[e]Leet Teams</h1>
 <div class="row">
     <div class="col-1"></div>
     <div class="col-6 p-0">
@@ -8,16 +8,19 @@
             </div>
         </div>
     </div>
-    <div class="col-4 p-0">
-        <div class="team_chat m-2">
-            <h6>Team chat:</h6>
-            <div style="overflow: auto; height: 80%;">
+    <div class="col-4">
+        <div class="team_chat m-2 p-3">
+            <h3 class="text-center">Team chat:</h3>
+            <div style="overflow: auto; height: 72%;" class="messages">
                 <p *ngFor="let message of messages"> {{message}}</p>
             </div>
-            <textarea style="width: 100%" cols="10" rows="2" [(ngModel)] ="message"></textarea>
-            <button style="height: 25px" (click)="sendMessage()">Send</button>
+            <div>
+                <textarea (keydown.enter)="sendMessage()" id="team_chat" style="width: 100%" cols="10" rows="4" [(ngModel)] ="message"></textarea>
+                <button class="btn btn-primary btn-lg btn-block" (click)="sendMessage()">Send</button>
+            </div>
         </div>
     </div>
     <div class="col-1"></div>
 </div>
-<img class="bg" src="https://i0.wp.com/www.buzzmasters.ca/wp-content/uploads/2019/05/trianglify.png?ssl=1">
+<img class="bg" src="https://codetheweb.blog/assets/img/posts/css-advanced-background-images/mountains.jpg">
+<!-- <img class="bg" src="https://i0.wp.com/www.buzzmasters.ca/wp-content/uploads/2019/05/trianglify.png?ssl=1"> -->
