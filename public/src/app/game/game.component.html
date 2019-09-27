@@ -11,25 +11,13 @@
     <div class="col-4 p-0">
         <div class="team_chat m-2">
             <h6>Team chat:</h6>
-
             <div style="overflow: auto; height: 80%;">
                 <p *ngFor="let message of messages"> {{message}}</p>
-               
             </div>
             <textarea style="width: 100%" cols="10" rows="2" [(ngModel)] ="message"></textarea>
             <button style="height: 25px" (click)="sendMessage()">Send</button>
         </div>
-        <div class="col-1"></div>
     </div>
-
     <div class="col-1"></div>
-</div>
-<div class="row">
-    <div class="col text-center">
-    </div>
-    <div class="col">
-        <div class="col"></div>
-        <div class="col"></div>
-    </div>
 </div>
 <img class="bg" src="https://i0.wp.com/www.buzzmasters.ca/wp-content/uploads/2019/05/trianglify.png?ssl=1">
