@@ -48,6 +48,24 @@ export class CodeEditorComponent implements OnInit {
           this.gameEnd = true;
         }
       });
+    this.gameService
+      .beginGame()
+      .subscribe((data)=> {
+        this.gameStart = true;
+        this.countdownTimer();
+      })
+
+    this.gameService 
+      .begin_new_game()
+      .subscribe((data) => {
+        if('current_question' in data) {
+          this.current_question = data['current_question'];
+        }
+        this.seconds = data['seconds'];
+        this.minutes = data['minutes'];
+        this.counter = data['counter'];
+        this.countdownTimer();
+      });
   }
   
   ngAfterViewInit() {
@@ -76,11 +94,17 @@ export class CodeEditorComponent implements OnInit {
     this.minutes = 25;
     this.counter = 1500;
     this.sendMessage();
+    this.countdownTimer();
+    this.gameService.newGame({
+      'current_question' : this.current_question,
+      'seconds' : this.seconds,
+      'minutes' : this.minutes,
+      'counter' : this.counter
+    })
     this.gameService.changeAttempts({'rem_attempts': this.rem_guesses,
-      'game_text' : this.game_text,
+      'game_text' : `You have ${this.rem_guesses} attempt(s) remaining!`,
       'game_end' : false,
       'error_message' : ""});
-    this.countdownTimer();
   }
 
   checkAnswer() {
@@ -149,6 +173,7 @@ export class CodeEditorComponent implements OnInit {
 
   startGame () {
     this.gameStart = true;
+    this.gameService.startGame();
     this.countdownTimer();
   }
 

@@ -16,13 +16,27 @@ var attempt_dict = {'rem_attempts' : 3,
     'error_message' : ""};
 var message = 'Start Coding!';
 
+var new_game = {
+    'seconds' : 0,
+    'minutes' : 25,
+    'counter' : 1500
+}
+
 const io = require('socket.io')(server);
 io.on('connection', function (socket) {
-    socket.emit('new-message', message)
-    socket.emit('change_guesses', attempt_dict)
+    //Check the emits
+    socket.emit('new-message', message);
+    socket.emit('change_guesses', attempt_dict);
     socket.on('message', (data) => {
         message = data;
         socket.broadcast.emit('new-message', message);
+    });
+    socket.on('start_game', (data) => {
+        socket.broadcast.emit('begin_game', true);
+    });
+    socket.on('new_game', (data) => {
+        new_game = data;
+        socket.broadcast.emit('initate_new_game', new_game);
     });
     socket.on('create-message', (data) => {
         message = data;
@@ -30,7 +44,6 @@ io.on('connection', function (socket) {
     });
     socket.on('change_guesses', (data) => {
         attempt_dict = data;
-        console.log(attempt_dict);
         socket.broadcast.emit('decrement_guesses', attempt_dict)
     });
 });
