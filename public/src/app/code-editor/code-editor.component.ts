@@ -13,7 +13,7 @@ export class CodeEditorComponent implements OnInit {
   @Input() game_instance: any;
   @Input() current_question: any;
   @Input() question_number: number;
-  @ViewChild('editor', {static: false}) editor;
+  @ViewChild('editor') editor;
 
   message : String = '';
   rem_guesses = 3;
