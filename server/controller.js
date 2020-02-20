@@ -4,7 +4,6 @@ const  request = require('request');
 
 module.exports = {
     generate_questions: (req, res)=>{
-        console.log("we are populating our questions")
         if (req.params.id == "eleetteamsadmin"){
             Question.find()
                 .then((data)=>{
@@ -95,10 +94,7 @@ module.exports = {
         Question.findOne({name: req.body.question_name})
             .then((data)=>{
                 current_question = data
-                console.log("found question!", data)
-                console.log(program.script)
                 program.script += current_question.input
-                console.log("Program script is :", program.script)
 
                 request({
                     url:'https://api.jdoodle.com/v1/execute',
@@ -113,21 +109,15 @@ module.exports = {
                     }
         
                     if (body.statusCode == 200){
-                        console.log('Body Output: ', body.output)
-                        console.log('Expected Output: ', current_question.expected_output)
                         if (body.output == current_question.expected_output){
                             body.message = "Correct!"
-                            console.log('body:', body)
                             express_response.jdoodle = body
-                            console.log("response from jdoodle", body);
 
                             Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
                             .then(data => {
-                                console.log("Something updated! ", data)
                                 Game.findOne({_id: req.body.game_id})
                                     .then((data)=>{
                                         express_response.game = data
-                                        console.log("Update on Current Game: ", express_response.game)
                                         if (data.turns > 3){
                                             express_response.game.message = "No more submissions left!"
                                             res.json(express_response)
@@ -149,14 +139,11 @@ module.exports = {
                         else {
                             body.message = "Incorrect!"
                             express_response.jdoodle = body
-                            console.log("response from jdoodle", body);
                             Game.updateOne({_id: req.body.game_id}, {$inc: {turns: 1}})
                             .then(data => {
-                                console.log("Something updated! ", data)
                                 Game.findOne({_id: req.body.game_id})
                                     .then((data)=>{
                                         express_response.game = data
-                                        console.log("Update on Current Game: ", express_response.game)
                                         if (data.turns > 3){
                                             express_response.game.message = "No more submissions left!"
                                             res.json(express_response)
@@ -166,7 +153,6 @@ module.exports = {
                                         }
                                     })
                                     .catch((err)=>{
-                                        console.log("For some reason couldn't find the updated game...")
                                         res.json(err)
                                     })
                             })
