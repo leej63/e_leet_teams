@@ -6,7 +6,7 @@ app.use(express.static(__dirname + '/public/dist/public'));
 
 require('./server/routes.js')(app);
 
-const server = app.listen(4000, ()=> {
+const server = app.listen(4000, 'localhost', ()=> {
     console.log("ExpressJS Server listening on port 4000");
 })
 
