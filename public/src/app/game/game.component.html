@@ -11,12 +11,12 @@
     <div class="col-4">
         <div class="team_chat m-2 p-3">
             <h3 class="text-center">Team chat</h3>
-            <div style="overflow: auto; height: 72%;" class="messages">
-                <p *ngFor="let message of messages"> {{message}}</p>
+            <div style="overflow:auto; height: 75%;" class="messages">
+                <p class="mt-2" *ngFor="let message of messages.reverse()"> {{message}}</p>
             </div>
-            <div>
-                <textarea (keydown.enter)="sendMessage()" class="form-control my-1" id="team_chat" style="width: 100%" cols="10" rows="4" [(ngModel)] ="message"></textarea>
-                <button class="btn btn-primary btn-lg btn-block" (click)="sendMessage()">Send</button>
+            <div style="height: 25%">
+                <textarea (keydown.enter)="sendMessage()" class="form-control my-1" id="team_chat" style="width: 100%" cols="10" rows="3" [(ngModel)] ="message"></textarea>
+                <button class="btn btn-primary btn-med btn-block" (click)="sendMessage()">Send</button>
             </div>
         </div>
     </div>
