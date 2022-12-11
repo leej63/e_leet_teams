@@ -21,7 +21,7 @@
     "@angular/compiler": "^8.2.7",
     "@types/socket.io-client": "^1.4.32",
     "buffer": "^5.4.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mongoose": "^5.7.1",
     "ng2-ace-editor": "^0.3.9",
     "request": "^2.88.0",
